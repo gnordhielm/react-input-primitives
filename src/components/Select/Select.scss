@@ -1,0 +1,66 @@
+
+&.select {
+
+    & > .dropdown {
+
+        .title {
+            border-bottom: 1px solid $light-2;
+            cursor: default;
+            padding: 0.5rem 0.25rem 0.5rem 1.25rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+            // font-weight: 500;
+        }
+
+        .option {
+            cursor: pointer;
+            color: $light-2;
+            padding: 0.5rem 0.25rem 0.5rem 1.25rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+
+            transition: none;
+
+            &.empty {
+                color: $light-1;
+            }
+
+            &:hover {
+                color: $dark-3;
+                background: $light-3;
+            }
+
+            &.active {
+                color: $dark-3;
+                background: $lightest;
+            }
+
+            &.no-match-message, &.no-match-message:hover {
+                color: $light-1;
+                background: none;
+                cursor: default;
+            }
+
+            &.single-match {
+                border-bottom: 1px solid $light-3;
+            }
+
+            &.disabled, &.divider {
+                color: $medium;
+                background: none;
+                cursor: default;
+            }
+
+            &.divider {
+                color: $light-2;
+                font-size: 0.85em;
+                text-transform: uppercase;
+                text-align: center;
+                padding: 1em 0 0.5em;
+            }
+        }
+    }
+
+}

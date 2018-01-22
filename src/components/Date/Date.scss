@@ -1,0 +1,72 @@
+
+&.date {
+
+    $side-padding: 0.5rem;
+    $calendar-base-width: 12.5rem;
+
+    & > .dropdown {
+        max-height: none;
+        user-select: none;
+        min-width: $calendar-base-width;
+
+        & > .header {
+            align-items: baseline;
+            color: $light-1;
+            display: flex;
+            font-size: 1rem;
+            justify-content: space-around;
+            padding: 0.75rem 0.25rem;
+
+            .title {
+                flex: 4;
+                text-align: center;
+            }
+
+            i.icon.chevron {
+                flex: 1;
+                color: $medium;
+                cursor: pointer;
+
+                &:hover {
+                    color: $light-3;
+                }
+            }
+
+        }
+
+        & > .day-names {
+            color: $medium;
+            cursor: default;
+            display: flex;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 0 $side-padding 0.15rem;
+            justify-content: space-around;
+            text-transform: uppercase;
+        }
+
+        & > .calendar {
+
+            padding: $side-padding;
+
+            .week {
+                display: flex;
+            }
+
+            .day {
+                font-size: 0.9rem;
+                flex: 1;
+                text-align: center;
+                padding: 0.65rem 0.15rem;
+
+                &.disabled {
+                    color: $medium;
+                }
+            }
+        }
+    }
+
+    &.inline {
+        width: $calendar-base-width;
+    }
+}
