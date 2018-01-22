@@ -1,0 +1,16 @@
+{
+  "name": "react-input-primitives",
+  "version": "1.0.0-alpha.0",
+  "description": "Easy-to-use input components for React projects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "form",
+    "react",
+    "input"
+  ],
+  "author": "Gus Nordhielm",
+  "license": "ISC"
+}
