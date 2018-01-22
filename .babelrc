@@ -1,0 +1,24 @@
+
+{
+    "env": {
+        "development": {
+            "presets": ["react", "env", "stage-0"],
+            "plugins": [
+                "webpack-alias", "simple-logger"
+            ]
+        },
+        "test": {
+            "presets": ["react", "env", "stage-0"],
+            "plugins": [
+                "webpack-alias"
+            ]
+        },
+        "production" : {
+            "presets": ["react", "env", "stage-0"],
+            "plugins": [
+                "lodash", "webpack-alias"
+            ]
+
+        }
+    }
+}
