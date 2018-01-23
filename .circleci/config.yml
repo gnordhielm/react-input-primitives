@@ -129,6 +129,7 @@ jobs:
   build:
     <<: *defaults
     steps:
+      - run: ls
       - run:
           name: Build
           command: npm run dist
