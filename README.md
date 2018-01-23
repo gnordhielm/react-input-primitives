@@ -6,4 +6,6 @@
 
 Easy to use input components for React projects.
 
+---
+
 This project is early in development, feel free to dig into the code for inspiration, but please do not use it in production.

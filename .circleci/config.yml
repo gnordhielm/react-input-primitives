@@ -154,7 +154,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update NPM
+          name: Update Global Node Modules
           command: 'sudo npm install -g'
           # command: 'sudo npm install -g npm@latest'
       - restore_cache:
@@ -172,7 +172,12 @@ jobs:
   publish:
     <<: *defaults
     steps:
-      - run: echo "publish"
+      - run:
+          name: Set up NPM Auth
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Publish Package
+          command: - npm publish --access=public
 
 
 workflows:
