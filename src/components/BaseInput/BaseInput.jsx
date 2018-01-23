@@ -3,8 +3,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { debounce, defer, isEmpty } from 'lodash'
-import { defaultDebounce } from 'constants'
-import { uuid } from 'filters'
+import { defaultDebounce } from 'settings'
+import { uuid } from 'helpers'
 
 class BaseInput extends PureComponent {
 

@@ -1,12 +1,11 @@
 
-import BooleanInput from './Boolean/Boolean.jsx'
-import ColorInput from './Color/Color.jsx'
-import DateInput from './Date/Date.jsx'
-import FileInput from './File/File.jsx'
-import NumberInput from './Number/Number.jsx'
-import SelectInput from './Select/Select.jsx'
-import StringInput from './String/String.jsx'
-import UserInput from './User/User.jsx'
+import BooleanInput from './components/Boolean'
+import ColorInput from './components/Color'
+import DateInput from './components/Date'
+import FileInput from './components/File'
+import NumberInput from './components/Number'
+import SelectInput from './components/Select'
+import StringInput from './components/String'
 
 export default {
     Boolean: BooleanInput,
@@ -15,8 +14,7 @@ export default {
     File: FileInput,
     Number: NumberInput,
     Select: SelectInput,
-    String: StringInput,
-    User: UserInput
+    String: StringInput
 }
 
 export {

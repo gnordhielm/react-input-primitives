@@ -1,148 +1,3 @@
-# version: 2
-# # dependencies:
-# #   pre:
-# #     - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-# # deployment:
-# #   npm:
-# #     tag: /v[0-9]+(\.[0-9]+)*/
-# #         commands:
-# #       - npm publish --access=public
-# jobs:
-#   # build:
-#   #   docker:
-#   #     - image: circleci/node:6.10
-#   #   steps:
-#   #     - checkout
-#   #     - run:
-#   #         name: Greeting
-#   #         command: echo Hello, world.
-#   #     - run:
-#   #         name: Print the Current Time
-#   #         command: date
-#   one:
-#     docker:
-#       - image: circleci/node:6.10
-#       steps:
-#         - checkout
-#         - run: echo "A first hello"
-#         - run: sleep 25
-#   two:
-#     docker:
-#       - image: circleci/node:6.10
-#       steps:
-#         - checkout
-#         - run: echo "A second hello"
-#         - run: sleep 15
-# workflows:
-#   version: 2
-#   one_and_two:
-#     jobs:
-#       - one
-#       - two
-
-# with each push
-# I want to build into the dist folder
-# then deploy to npm
-# that is all
-#
-# version: 2
-# jobs:
-#
-#   build:
-#     docker:
-#       - image: circleci/node:6.11
-#     steps:
-#       - checkout
-#       - run:
-#           name: Update npm
-#           command: 'sudo npm install -g npm@5.6.0'
-#       - restore_cache:
-#           key: dependency-cache-{{ checksum "package.json" }}
-#       - run:
-#           name: Install Dependencies
-#           command: npm install
-#       - save_cache:
-#           key: dependency-cache-{{ checksum "package.json" }}
-#           paths:
-#             - node_modules
-#       - run:
-#           name: Build for Distribution
-#           command: npm run dist
-#
-#   publish_to_npm:
-#     docker:
-#       - image: circleci/node:6.10
-#     steps:
-#       - checkout
-#       - run: echo "publish to npm"
-#
-# workflows:
-#   version: 2
-#   build_and_publish:
-#     jobs:
-#       - build
-#       - publish_to_npm:
-#           requires:
-#             - build
-#           filters:
-#             branches:
-#               only: master
-
-
-
-# version: 2
-# jobs:
-#   checkout:
-#     <<: *defaults
-#     steps:
-#       - *restore_repo
-#       - checkout
-#       - run:
-#           name: Check Versions and Env
-#           command: |
-#             yarn --version
-#             node --version
-#             docker --version
-#             docker-compose --version
-#             env
-#             yarn cache dir
-#       - restore_cache:
-#           key: v1-yarn-sha-{{ checksum "yarn.lock" }}
-#       - run:
-#           name: Install Dependencies
-#           command: yarn install --frozen-lockfile
-#       - save_cache:
-#           key: v1-yarn-sha-{{ checksum "yarn.lock" }}
-#           paths:
-#             - ~/.cache/yarn/v1
-#       - save_cache:
-#           key: v1-repo-{{ .Branch }}-{{ .Revision }}
-#           paths:
-#             - /tmp/react-input-primitives
-#   build:
-#     <<: *defaults
-#     steps:
-#       - run: pwd && cd .. && pwd && ls
-#       - run:
-#           name: Build
-#           command: npm run dist
-# workflows:
-#   version: 2
-#   build_and_publish:
-#     jobs:
-#       - checkout
-#       - build:
-#           requires:
-#             - checkout
-      # - publish_to_npm:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         only: master
-
-
-
 version: 2
 defaults: &defaults
   working_directory: /tmp/react-input-primitives
@@ -156,7 +11,6 @@ jobs:
       - run:
           name: Update Global Node Modules
           command: 'sudo npm install -g'
-          # command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -169,9 +23,6 @@ jobs:
       - run:
           name: Build for Production
           command: npm run dist
-      # - persist_to_workspace:
-      #     root: /tmp/react-input-primitives
-      #     paths: /tmp/react-input-primitives/*
   publish:
     <<: *defaults
     steps:
@@ -181,7 +32,6 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: pwd && ls
       - run:
           name: Publish Package
           command: npm publish --access=public

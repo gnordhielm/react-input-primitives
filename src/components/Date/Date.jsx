@@ -3,8 +3,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { debounce, defer } from 'lodash'
-import { getCalendarMonthWeeks, momentTypeChecker, uuid } from 'filters'
-import { defaultDebounce, momentFormat } from 'constants'
+import { getCalendarMonthWeeks, momentTypeChecker, uuid } from 'helpers'
+import { defaultDebounce, momentFormat } from 'settings'
 
 // TO DO - support plain english inputs ('yesterday', 'today')
 // TO DO - support double click on calendar to set value
@@ -13,12 +13,12 @@ import { defaultDebounce, momentFormat } from 'constants'
 class DateInput extends PureComponent {
 
 	state = {
-        value: this.props.value,
-		calendarOpen: true,
-		allowPageNext: true,
-		allowPagePrev: true,
-		focusedDate: this.props.value || moment(),
-		hasFocus: false
+      value: this.props.value,
+			calendarOpen: true,
+			allowPageNext: true,
+			allowPagePrev: true,
+			focusedDate: this.props.value || moment(),
+			hasFocus: false
     }
 
     pendingOnChange = false

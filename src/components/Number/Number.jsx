@@ -1,6 +1,5 @@
 
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
 
 class Number extends PureComponent {
 
@@ -19,7 +18,4 @@ class Number extends PureComponent {
 
 Number.defaultProps = {}
 
-export default connect(
-    state => ({  })
-)(Number)
-
+export default Number

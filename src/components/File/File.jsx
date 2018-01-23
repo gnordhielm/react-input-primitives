@@ -1,6 +1,5 @@
 
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
 
 class File extends PureComponent {
 
@@ -19,7 +18,4 @@ class File extends PureComponent {
 
 File.defaultProps = {}
 
-export default connect(
-    state => ({  })
-)(File)
-
+export default File

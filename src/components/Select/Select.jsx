@@ -1,9 +1,9 @@
 
-import BaseInput from '../BaseInput/BaseInput.jsx'
+import BaseInput from 'components/BaseInput'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fuzzyMatch } from 'filters'
+import { fuzzyMatch } from 'helpers'
 
 class SelectInput extends BaseInput {
 
@@ -18,7 +18,7 @@ class SelectInput extends BaseInput {
     }
 
 	componentWillReceiveProps({ value, options }) {
-		
+
 		const { optionDisplay } = this.props
 
 		this.setState(prevState => {

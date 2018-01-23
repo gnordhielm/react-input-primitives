@@ -23,6 +23,7 @@ const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
 const config = {
 
 	entry: [
+		'./src/index.js'
 		// './root/root.js'
 	],
 
@@ -58,26 +59,20 @@ const config = {
 
 	],
 
-    resolve: {
-        plugins: [
-            new DirectoryNamedWebpackPlugin({
-                exclude: /node_modules/,
-                include: /components/,
-                transformFn: (dirName, dirPath) => `${dirPath}/${dirName}.jsx`
-            })
-        ]
-    }
-
-	devServer: {
-		// hot: true,
-		// inline: false,
-		port: 1000,
-		disableHostCheck: true,
-		proxy: {
-		  "/services": "http://sbxops.sbx.avtr.net",
-		  "/wiki": "http://sbxops.sbx.avtr.net",
-		}
-	},
+  resolve: {
+		alias: {
+			components: './src/components',
+			helpers: './src/helpers/index.js',
+			settings: './src/settings/index.js'
+		},
+		plugins: [
+		    new DirectoryNamedWebpackPlugin({
+		        exclude: /node_modules/,
+		        include: /components/,
+		        transformFn: (dirName, dirPath) => `${dirPath}/${dirName}.jsx`
+		    })
+		]
+  },
 
 	devtool: 'cheap-module-eval-source-map'
 }

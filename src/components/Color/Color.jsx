@@ -1,6 +1,5 @@
 
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
 
 class Color extends PureComponent {
 
@@ -19,7 +18,4 @@ class Color extends PureComponent {
 
 Color.defaultProps = {}
 
-export default connect(
-    state => ({  })
-)(Color)
-
+export default Color
