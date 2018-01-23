@@ -137,7 +137,9 @@ workflows:
   build_and_publish:
     jobs:
       - checkout
-      - build
+      - build:
+          requires:
+            - checkout
       # - publish_to_npm:
       #     requires:
       #       - build
