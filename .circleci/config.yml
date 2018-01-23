@@ -145,7 +145,7 @@
 
 version: 2
 defaults: &defaults
-  working_directory: ~/react-input-primitives
+  working_directory: /tmp/react-input-primitives
   docker:
     - image: circleci/node:6.10
 jobs:
@@ -169,15 +169,18 @@ jobs:
       - run:
           name: Build for Production
           command: npm run dist
+      # - persist_to_workspace:
+      #     root: /tmp/react-input-primitives
+      #     paths: /tmp/react-input-primitives/*
   publish:
     <<: *defaults
     steps:
+      - checkout
       - run:
           name: Set up NPM Auth
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - run: pwd && ls
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+        key: dependency-cache-{{ checksum "package.json" }}
       - run: pwd && ls
       - run:
           name: Publish Package
