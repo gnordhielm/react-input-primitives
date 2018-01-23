@@ -54,19 +54,19 @@ jobs:
     steps:
       - checkout
       - run:
-          name: update npm
-          command: 'sudo npm install -g npm@latest'
+          name: Update npm
+          command: 'sudo npm install -g npm@latest  process-nextick-args util-deprecate'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
-          name: install node modules
+          name: Install Dependencies
           command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
       - run:
-          name: build for distribution
+          name: Build for Distribution
           command: npm run dist
 
   publish_to_npm:
