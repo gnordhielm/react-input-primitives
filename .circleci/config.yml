@@ -90,50 +90,50 @@
 
 
 
-version: 2
-jobs:
-  checkout:
-    <<: *defaults
-    steps:
-      - *restore_repo
-      - checkout
-      - run:
-          name: Check Versions and Env
-          command: |
-            yarn --version
-            node --version
-            docker --version
-            docker-compose --version
-            env
-            yarn cache dir
-      - restore_cache:
-          key: v1-yarn-sha-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: v1-yarn-sha-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn/v1
-      - save_cache:
-          key: v1-repo-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - /tmp/react-input-primitives
-  build:
-    <<: *defaults
-    steps:
-      - run: pwd && cd .. && pwd && ls
-      - run:
-          name: Build
-          command: npm run dist
-workflows:
-  version: 2
-  build_and_publish:
-    jobs:
-      - checkout
-      - build:
-          requires:
-            - checkout
+# version: 2
+# jobs:
+#   checkout:
+#     <<: *defaults
+#     steps:
+#       - *restore_repo
+#       - checkout
+#       - run:
+#           name: Check Versions and Env
+#           command: |
+#             yarn --version
+#             node --version
+#             docker --version
+#             docker-compose --version
+#             env
+#             yarn cache dir
+#       - restore_cache:
+#           key: v1-yarn-sha-{{ checksum "yarn.lock" }}
+#       - run:
+#           name: Install Dependencies
+#           command: yarn install --frozen-lockfile
+#       - save_cache:
+#           key: v1-yarn-sha-{{ checksum "yarn.lock" }}
+#           paths:
+#             - ~/.cache/yarn/v1
+#       - save_cache:
+#           key: v1-repo-{{ .Branch }}-{{ .Revision }}
+#           paths:
+#             - /tmp/react-input-primitives
+#   build:
+#     <<: *defaults
+#     steps:
+#       - run: pwd && cd .. && pwd && ls
+#       - run:
+#           name: Build
+#           command: npm run dist
+# workflows:
+#   version: 2
+#   build_and_publish:
+#     jobs:
+#       - checkout
+#       - build:
+#           requires:
+#             - checkout
       # - publish_to_npm:
       #     requires:
       #       - build
