@@ -44,46 +44,97 @@
 # I want to build into the dist folder
 # then deploy to npm
 # that is all
+#
+# version: 2
+# jobs:
+#
+#   build:
+#     docker:
+#       - image: circleci/node:6.11
+#     steps:
+#       - checkout
+#       - run:
+#           name: Update npm
+#           command: 'sudo npm install -g npm@5.6.0'
+#       - restore_cache:
+#           key: dependency-cache-{{ checksum "package.json" }}
+#       - run:
+#           name: Install Dependencies
+#           command: npm install
+#       - save_cache:
+#           key: dependency-cache-{{ checksum "package.json" }}
+#           paths:
+#             - node_modules
+#       - run:
+#           name: Build for Distribution
+#           command: npm run dist
+#
+#   publish_to_npm:
+#     docker:
+#       - image: circleci/node:6.10
+#     steps:
+#       - checkout
+#       - run: echo "publish to npm"
+#
+# workflows:
+#   version: 2
+#   build_and_publish:
+#     jobs:
+#       - build
+#       - publish_to_npm:
+#           requires:
+#             - build
+#           filters:
+#             branches:
+#               only: master
 
+
+defaults: &defaults
+  working_directory: /tmp/react-input-primitives
+  docker:
+    - image: circleci/node:6.11
+restore_repo: &restore_repo
+  restore_cache:
+    keys:
+      - v1-repo-{{ .Branch }}-{{ .Revision }}
 version: 2
 jobs:
-
-  build:
-    docker:
-      - image: circleci/node:6.10
+  checkout:
+    <<: *defaults
     steps:
+      - *restore_repo
       - checkout
       - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@5.6.0 process-nextick-args'
+          name: Check versions and env
+          command: |
+            yarn --version
+            node --version
+            docker --version
+            docker-compose --version
+            env
+            yarn cache dir
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: v1-yarn-sha-{{ checksum "yarn.lock" }}
       - run:
-          name: Install Dependencies
-          command: npm install
+          name: Install js dependencies
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: v1-yarn-sha-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-      - run:
-          name: Build for Distribution
-          command: npm run dist
-
-  publish_to_npm:
-    docker:
-      - image: circleci/node:6.10
-    steps:
-      - checkout
-      - run: echo "publish to npm"
-
+            - ~/.cache/yarn/v1
+      - save_cache:
+          key: v1-repo-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - /tmp/react-input-primitives
 workflows:
   version: 2
   build_and_publish:
     jobs:
-      - build
-      - publish_to_npm:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      - checkout
+      # - build
+      # - publish_to_npm:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only: master
