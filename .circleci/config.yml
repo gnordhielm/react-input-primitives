@@ -155,7 +155,8 @@ jobs:
       - checkout
       - run:
           name: Update NPM
-          command: 'sudo npm install -g npm@latest'
+          command: 'sudo npm install -g'
+          # command: 'sudo npm install -g npm@latest'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
