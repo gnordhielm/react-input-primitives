@@ -1,10 +1,11 @@
 {
   "name": "@lessjs/react-input-primitives",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Easy-to-use input components for React projects.",
   "main": "index.js",
   "scripts": {
-    "dev": "echo dev",
+    "dev": "echo \"dev\"",
+    "dist": "echo \"dist\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

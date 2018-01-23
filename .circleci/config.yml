@@ -40,40 +40,50 @@
 #       - one
 #       - two
 
+# with each push
+# I want to build into the dist folder
+# then deploy to npm
+# that is all
 
 version: 2
 jobs:
-  one:
+
+  build:
     docker:
       - image: circleci/node:6.10
     steps:
       - checkout
-      - run: echo "Job one"
-      - run: mkdir -p my_workspace
-      - run: echo "Trying out workspaces" > my_workspace/echo-output
-      - persist_to_workspace:
-          root: my_workspace
+      - run:
+          name: update npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install node modules
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
-            - echo-output
-  two:
+            - node_modules
+      - run:
+          name: build for distribution
+          command: npm run dist
+
+  publish_to_npm:
     docker:
       - image: circleci/node:6.10
     steps:
       - checkout
-      - run: echo "Job two"
-      - attach_workspace:
-          at: my_workspace
-      - run: |
-          if [[ $(cat my_workspace/echo-output) == "Trying out workspaces" ]]; then
-            echo "It worked!";
-          else
-            echo "Nope!"; exit 1
-          fi
+      - run: echo "publish to npm"
+
 workflows:
   version: 2
-  one_and_two:
+  build_and_publish:
     jobs:
-      - one
-      - two:
+      - build
+      - publish_to_npm:
           requires:
-            - one
+            - build
+          filters:
+            branches:
+              only: master
