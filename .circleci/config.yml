@@ -89,14 +89,7 @@
 #               only: master
 
 
-defaults: &defaults
-  working_directory: /tmp/react-input-primitives
-  docker:
-    - image: circleci/node:6.11
-restore_repo: &restore_repo
-  restore_cache:
-    keys:
-      - v1-repo-{{ .Branch }}-{{ .Revision }}
+
 version: 2
 jobs:
   checkout:
@@ -147,3 +140,45 @@ workflows:
       #     filters:
       #       branches:
       #         only: master
+
+
+
+version: 2
+defaults: &defaults
+  working_directory: ~/react-input-primitives
+  docker:
+    - image: circleci/node:6.10
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Build for Production
+          command: npm run dist
+  publish:
+    <<: *defaults
+    steps:
+      - run: echo "publish"
+
+
+workflows:
+  version: 2
+  build_and_publish:
+    jobs:
+      - build
+      - publish:
+          requires:
+            - build
