@@ -180,7 +180,7 @@ jobs:
           name: Set up NPM Auth
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - restore_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: pwd && ls
       - run:
           name: Publish Package
