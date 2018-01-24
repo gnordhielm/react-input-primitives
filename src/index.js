@@ -24,6 +24,5 @@ export {
     FileInput,
     NumberInput,
     SelectInput,
-    StringInput,
-    UserInput
+    StringInput
 }

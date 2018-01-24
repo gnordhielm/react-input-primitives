@@ -49,6 +49,7 @@ const config = {
 
   resolve: {
 		alias: {
+			'react-input-primitives': './src',
 			components: './src/components',
 			helpers: './src/helpers/index.js',
 			settings: './src/settings/index.js'

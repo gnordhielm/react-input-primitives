@@ -3,8 +3,9 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
-import { Button } from '@storybook/react/demo'
+import Input from 'react-input-primitives'
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>)
+
+storiesOf('String', module)
+  .add('with text', () =>
+    <Input.String onChange={action('change')} value={'str'} />)
