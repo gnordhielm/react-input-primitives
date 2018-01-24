@@ -22,13 +22,10 @@ const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
 
 const config = {
 
-	entry: [
-		'./src/index.js'
-		// './root/root.js'
-	],
+	entry: './src/index.js',
 
 	output: {
-		filename: '[name].bundle.js',
+		filename: 'index.js',
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/dist/'
 	},
@@ -46,16 +43,7 @@ const config = {
 
 	plugins: [
 
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor',
-			minChunks: module => {
-				const { resource } = module
-				return resource &&
-                    /node_modules/.test(resource) &&
-                    !/^.*\.(css|scss)$/.test(resource)
-			}
-		}),
-        new webpack.LoaderOptionsPlugin({ debug: true })
+		new webpack.LoaderOptionsPlugin({ debug: true })
 
 	],
 
